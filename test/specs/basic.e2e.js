@@ -1,21 +1,59 @@
-describe('Open Shoutem Website - Pricing', () => {
-    it('Proper h1 is displayed', async () => {
-        browser.url('https://shoutem.com/pricing/');
-        const naslov = await $('h1');
-        await expect(naslov).toHaveText('There are more ways to create apps with Shoutem');
-        //just run with npm run-script wdio run wdio.conf.js which is in the main folder
-        //ofc npm install before it
-    
+describe('Open Homework Website - test stuff', () => {
+    it('Bad login', async () => {
+        browser.url('https://demo.openmrs.org/openmrs/login.htm');
+
+        const usernameinput = await $('input#username');
+        await usernameinput.setValue("admino");
+
+        const pwdinput = await $('input#password');
+        await pwdinput.setValue("admino");
+
+        const locationpicker = await $("li#Laboratory");
+        await locationpicker.click();
+
+        const loginbutton = await $(".btn#loginButton");
+        await loginbutton.click();
+
+        const loginalert = await $("div#error-message");
+        await expect(loginalert).toHaveText("Invalid username/password. Please try again.");
+
+
+
     });
-   
-    it('Clicked the button and proper h1 is displayed', async () => {
-        browser.url('https://shoutem.com/apps/social-network/');
-        const elem = await $('a=Build now');
-        elem.click();
-        const chooseNaslov = await $("h1");
-        await expect(chooseNaslov).toHaveText('Choose an app template');
-        
-    
+
+    it('Good login', async () => {
+
+
+        browser.url('https://demo.openmrs.org/openmrs/login.htm');
+
+        const usernameinput = await $('input#username');
+        await usernameinput.setValue("Admin");
+
+        const pwdinput = await $('input#password');
+        await pwdinput.setValue("Admin123");
+
+        const locationpicker = await $("li#Laboratory");
+        await locationpicker.click();
+
+        const loginbutton = await $(".btn#loginButton");
+        await loginbutton.click();
+
+        const loginalert = await $("h4");
+        await expect(loginalert).toHaveText("Logged in as Super User (admin) at Laboratory.");
+
+
+    });
+
+    it('Logout ', async () => {
+
+        const logoutbtn = await $("a=Logout");
+        logoutbtn.click();
+
+
+        const loggedout = await $("a#cantLogin");
+        await expect(loggedout).toHaveText("Can't log in?");
+
+
     });
 
 })
