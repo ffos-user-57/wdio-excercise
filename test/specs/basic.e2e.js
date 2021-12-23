@@ -1,57 +1,97 @@
-describe('Open Homework Website - test stuff', () => {
-    it('Bad login', async () => {
-        browser.url('https://demo.openmrs.org/openmrs/login.htm');
+describe('Testing Hoxframework Website', () => {
+    it('1- Test Videos button functionality', async () => {
+        browser.url('https://hoxframework.com.hr/');
+        //load the website - test website loading as well while we're here
 
-        const usernameinput = await $('input#username');
-        await usernameinput.setValue("admino");
+        //define button var
+        const videosbutton = await $("a=Videos");
+        await videosbutton.click()
+        //click button
 
-        const pwdinput = await $('input#password');
-        await pwdinput.setValue("admino");
-
-        const locationpicker = await $("li#Laboratory");
-        await locationpicker.click();
-
-        const loginbutton = await $(".btn#loginButton");
-        await loginbutton.click();
-
-        const loginalert = await $("div#error-message");
-        await expect(loginalert).toHaveText("Invalid username/password. Please try again.");
-
+        //new page loaded, check for <h1> tags
+        const videosScreen = await $("h1");
+        //make sure <h1> tag has the text that only "Videos" Screen has
+        await expect(videosScreen).toHaveText("Category: VIDEOS");
+        //Done.
 
 
     });
 
-    it('Good login', async () => {
+    it('2- Topic click test', async () => {
+        //main page
+        browser.url('https://hoxframework.com.hr/');
 
+        //define var and click the button when ready
+        const randomlyPickedTopic = await $('a[href="https://hoxframework.com.hr/?p=496"]');
+        await randomlyPickedTopic.click();
+        //clicked the button, new page loading
 
-        browser.url('https://demo.openmrs.org/openmrs/login.htm');
-
-        const usernameinput = await $('input#username');
-        await usernameinput.setValue("Admin");
-
-        const pwdinput = await $('input#password');
-        await pwdinput.setValue("Admin123");
-
-        const locationpicker = await $("li#Laboratory");
-        await locationpicker.click();
-
-        const loginbutton = await $(".btn#loginButton");
-        await loginbutton.click();
-
-        const loginalert = await $("h4");
-        await expect(loginalert).toHaveText("Logged in as Super User (admin) at Laboratory.");
-
+        //now lets check if the page loaded right - check title:
+        await expect(browser).toHaveTitle("Basic PenTesting Tools in Java | Java programming for RedTeam’s basics | HOXFRAMEWORK – Hox Framework");
+        
+        //DONE
 
     });
 
-    it('Logout ', async () => {
+    it('3- Test Discord invite link', async () => {
+         
+        //load the main website 
+        browser.url('https://hoxframework.com.hr/');
 
-        const logoutbtn = await $("a=Logout");
-        logoutbtn.click();
+        //find the invite link
+        const inviteLink = await $("a=Click Here to join");
+        await inviteLink.click();
+        //click the link
+
+        //Problem here is its gonna start loading discord
+        //but we extracted stuff
 
 
-        const loggedout = await $("a#cantLogin");
-        await expect(loggedout).toHaveText("Can't log in?");
+        await expect(browser).toHaveTitle("HoxFramework Information Share center");
+
+    });
+
+    it('W4- Search bar test', async () => {
+        //main page
+        browser.url('https://hoxframework.com.hr/');
+
+        //locate search button
+        const searchButton = await $("button#search-icon");
+        await searchButton.click();
+        //click it - search thing opens
+        
+        //define input box - class search-field
+        const inputBox = await $(".search-field");
+        await inputBox.setValue("metasploit");
+        //input query that will be found
+
+        //press enter
+        browser.keys("\uE007"); 
+
+        //make sure it loaded
+        const queryResult = await $('h1');
+        //pick up that h1 and check if we have h1 with this result
+        await expect(queryResult).toHaveText('2 search results for "metasploit"');
+        //ez
+
+    });
+    it('5- LBRY button test', async () => {
+        doesnt work
+        //navigate to main page
+        browser.url('https://hoxframework.com.hr/');
+
+        //locate the lbry button
+        const ytbtn = await $('a[href="https://lbry.tv/@HoxFramework"]');
+        //click it
+        await ytbtn.click();
+        
+
+        const lbryResult = await $("span");
+        //loaded hox's lbry acc page 
+
+        //lets check if it loaded it correctly by checking if the video is there by name
+        await expect(lbryResult).toHaveText('Extracting Insane Information from a Windows Memory Dump with VOLATILITY (Digital Forensics- THM)');
+        //aight, LEET 
 
 
     });
