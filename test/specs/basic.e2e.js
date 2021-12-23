@@ -1,4 +1,11 @@
 describe('Testing Hoxframework Website', () => {
+    //poteskoce:
+    // youtube accept cookies problem
+    // using XPATH
+    // Finding ENTER key
+    // Working with multiple tabs ?? 
+
+
     it('1- Test Videos button functionality', async () => {
         browser.url('https://hoxframework.com.hr/');
         //load the website - test website loading as well while we're here
@@ -51,7 +58,7 @@ describe('Testing Hoxframework Website', () => {
 
     });
 
-    it('W4- Search bar test', async () => {
+    it('4- Search bar test', async () => {
         //main page
         browser.url('https://hoxframework.com.hr/');
 
@@ -75,24 +82,22 @@ describe('Testing Hoxframework Website', () => {
         //ez
 
     });
-    it('5- LBRY button test', async () => {
-        doesnt work
+   
+    it('5- Second page button', async () => {
+
         //navigate to main page
         browser.url('https://hoxframework.com.hr/');
 
-        //locate the lbry button
-        const ytbtn = await $('a[href="https://lbry.tv/@HoxFramework"]');
+        const secondPageButton = await $('a.page-numbers=2');
         //click it
-        await ytbtn.click();
+        await secondPageButton.click();
         
 
-        const lbryResult = await $("span");
-        //loaded hox's lbry acc page 
+        const postLink = await $("a=Reverse engineering tool by the NSA: GHIDRA – Installation and rev. eng. example – HOXFRAMEWORK");
+        await postLink.click();
 
-        //lets check if it loaded it correctly by checking if the video is there by name
-        await expect(lbryResult).toHaveText('Extracting Insane Information from a Windows Memory Dump with VOLATILITY (Digital Forensics- THM)');
-        //aight, LEET 
 
+        await expect(browser).toHaveTitle("Reverse engineering tool by the NSA: GHIDRA – Installation and rev. eng. example – HOXFRAMEWORK – Hox Framework");
 
     });
 
